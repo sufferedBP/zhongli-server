@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  
+
+	Configuration fill for the HTMLDynamic 
+	Triggers:
+		When Spring init Servlet Configuration files, 
+		Load data to ..XMVC.Domain.HTmlDynamic.globalStyle and   
+	include:
+		 HTMLGlobalStyle: for the Front End framwork specified marks
+		 HTMLStrcutureMarkConfig: The structural marks for the HTMLDynamic
+		  
+	 
+
+ -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<bean id="HTMLGlobalStyleConfig"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location"
+			value="WEB-INF/spring/inerConfig/JSPAndServlet/HTMLDynamic/htmlGlobal.properties" />
+		<property name="placeholderPrefix" value="$HTML_Global{" />
+		<property name="placeholderSuffix" value="}" />
+	</bean>
+	<bean class="com.zhongli.server.XMVC.domain.HTMLDynamic.GlobalStyle">
+		<property name="erroMark" value="$HTML_Global{erroMark}" />
+		<property name="sucessMark" value="$HTML_Global{sucessMark}" />
+		<property name="warmingMark" value="$HTML_Global{warmingMark}" />
+		<property name="cssName" value="$HTML_Global{cssName}" />
+		<property name="name" value="$HTML_Global{name}" />
+	</bean>
+	
+	<!-- basic Structural identifier configuration for the HTMLDynamic package   -->
+	<bean id="HTMLStrcutureMarkConfig"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location"
+			value="WEB-INF/spring/inerConfig/JSPAndServlet/HTMLDynamic/HTMLStructurType.properties" />
+		<property name="placeholderPrefix" value="$HTML_STR{" />
+		<property name="placeholderSuffix" value="}" />
+	</bean>
+	<bean name="htmlInfo" class="com.zhongli.server.HTMLDynamic.HTMLInfo">
+		<property name="menuMark" value="$HTML_STR{menuMark}" />
+		<property name="menuUnitMark" value="$HTML_STR{menuUnitMark}" />
+		<property name="pageMark" value="$HTML_STR{pageMark}" />
+		<property name="footerMark" value="$HTML_STR{footerMark}" />
+		<property name="jointMark" value="$HTML_STR{jointMark}" />
+		<property name="titleExtentionMark" value="$HTML_STR{titleExtentionMark}" />
+		<property name="textElementMark" value="$HTML_STR{textElementMark}" />
+	</bean>
+
+	
+</beans>

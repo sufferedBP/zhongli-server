@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!--
+		Database Type 
+		dbType_mySQL
+		
+		 -->
+		
+<!-- load mySQL to the place holder -->
+	<bean id="GeneralDataSourceConfig"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location"
+			value="/WEB-INF/spring/inerConfig/ApplicationContextConfig/dataBaseType/mySQL.properties" />
+		<property name="placeholderPrefix" value="$dbType_mySQL{" />
+		<property name="placeholderSuffix" value="}" />
+	</bean>
+
+</beans>

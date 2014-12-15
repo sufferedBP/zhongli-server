@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<bean id="ServerSecurityConfigDataSourceConfig"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="/WEB-INF/spring/inerConfig/JSPAndServlet/Security/Security.properties" />
+		<property name="placeholderPrefix" value="$Server_Security{" />
+		<property name="placeholderSuffix" value="}" />
+	</bean>
+	<bean id="SecurityConfig"
+		class="com.zhongli.server.basic.security.config.SecurityConfig">
+		<property name="custommerIdentifier" value="$Server_Security{custommerIdentifier}"/>
+		<property name="lessingCompanyIdentifier" value="$Server_Security{lessingCompanyIdentifier}"/>
+		<property name="lessorIdentifier" value="$Server_Security{lessorIdentifier}"/>
+		<property name="basicIdentifier" value="$Server_Security{basicIdentifier}"/>
+		<property name="mainAdminIdentifier" value="$Server_Security{mainAdminIdentifier}"/>
+		
+	</bean>
+	<context:component-scan base-package="com.zhongli.server.basic.security" />
+</beans>

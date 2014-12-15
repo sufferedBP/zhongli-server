@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation=
+	"http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/security 
+	http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+	<!-- add Public sources here -->
+	<http security="none" pattern="/setting/**"/>
+	<http security="none" pattern="/init/**"/>
+	<http security="none" pattern="/webPage/apply/**"/>
+	<http auto-config="true" pattern="/webpage/user/**" >
+		<intercept-url pattern="/webpage/user/lessor/**" access="$Server_Security{lessorIdentifier}"/>
+		<intercept-url pattern="/webpage/user/lessingCompany/**" access="$Server_Security{lessingCompanyIdentifier}"/>
+		<intercept-url pattern="/webpage/user/custommer/**" access="$Server_Security{custommerIdentifier}"/>
+		<access-denied-handler error-page="/webpage/login.html"/>
+		<form-login username-parameter="userName" password-parameter="password"
+		 login-page="/webpage/login.html" authentication-success-handler-ref="AuthSucessHandeler"
+		 authentication-failure-url="/webpage/login.html?auth=fail"/>
+	</http>
+	<http auto-config="true" pattern="/webpage/admin/**" >
+		<intercept-url pattern="/webpage/admin/**" access="$Server_Security{mainAdminIdentifier}"/>
+		<access-denied-handler error-page="/webpage/login.html"/>
+		<form-login  username-parameter="userName" password-parameter="password"
+		 login-page="/webpage/login.html" authentication-success-handler-ref="AuthSucessHandeler" 
+		 authentication-failure-url="/webpage/login.html?auth=fail"/>
+	</http>
+	<http auto-config="true" pattern="/api/**" >
+		<intercept-url pattern="/api/lessor/**" access="$Server_Security{lessorIdentifier}"/>
+		<intercept-url pattern="/api/lessingCompany/**" access="$Server_Security{lessingCompanyIdentifier}"/>
+		<intercept-url pattern="/api/custommer/**" access="$Server_Security{custommerIdentifier}"/>
+		
+	</http>
+	<http auto-config="true">
+	<form-login username-parameter="userName" password-parameter="password"
+		 login-page="/webpage/login.html" authentication-success-handler-ref="AuthSucessHandeler"
+		 authentication-failure-url="/webpage/login.html?auth=fail"/>
+	</http>
+	<authentication-manager>
+		<authentication-provider user-service-ref="myUserService"/>
+	</authentication-manager>
+	<beans:bean id="myUserService" class="com.zhongli.server.basic.security.MyUserService"/>
+	<beans:bean id="AuthSucessHandeler"
+		class="com.zhongli.server.basic.security.config.MyAuthenticationSucessHandeler"/>
+</beans:beans>

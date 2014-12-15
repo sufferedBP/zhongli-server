@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="ServerConfigDataSourceConfig"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location"
+			value="/WEB-INF/spring/inerConfig/ServerConfig.properties" />
+		<property name="placeholderPrefix" value="$Server_Config{" />
+		<property name="placeholderSuffix" value="}" />
+	</bean>
+	<bean id="ServerConfig"
+		class="com.zhongli.server.basic.config.ServerConfig">
+		<property name="ormType" value="$Server_Config{ormType}"/>
+		<property name="defualMark" value="$Server_Config{defualtMark}"/>
+		<property name="hibernateSessionMark" value="$Server_Config{hibernateSessionMark}"/>
+		<property name="password" value="$Server_Config{password}"/>
+		<property name="userName" value="$Server_Config{userName}"/>
+	</bean>
+
+</beans>

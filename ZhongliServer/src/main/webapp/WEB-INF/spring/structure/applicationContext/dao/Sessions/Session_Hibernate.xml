@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+	<!-- imports -->
+	<import resource="../Basic/user_list.xml" />
+	<import resource="../Basic/DatabaseTypeConfig.xml" />
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close" p:driverClassName="$dbType_mySQL{driverClassName}"
+		p:url="$dbType_mySQL{prefix}$dbUser_zhongli{url}" p:username="$dbUser_zhongli{userName}"
+		p:password="$dbUser_zhongli{passWord}" />
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation">
+			<value>WEB-INF/spring/inerConfig/ApplicationContextConfig/Hibernate/hibernate.cfg.xml
+			</value>
+		</property>
+	</bean>
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<!-- the transactional semantics... -->
+		<tx:attributes>
+			<!-- all methods starting with 'get' are read-only -->
+			<!-- other methods use the default transaction settings (see below) -->
+			<tx:method name="*" />
+		</tx:attributes>
+	</tx:advice>
+
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<mvc:annotation-driven />
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean
+				class="org.springframework.orm.hibernate4.support.OpenSessionInViewInterceptor">
+				<property name="sessionFactory" ref="sessionFactory" />
+			</bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+</beans>

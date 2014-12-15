@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- use AOP with servlet to implement HTMLDynamic Structure -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- import different Bean Configuration for AOP here  -->
+	<import resource="../../../../inerConfig/JSPAndServlet/HTMLAOP/HTMLAOP.xml"/>
+</beans>
